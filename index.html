@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caatffee Bot | Oficial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #0f0f0f; }
+        .coffee-gradient { background: linear-gradient(135deg, #6f4e37 0%, #2c1b10 100%); }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .btn-coffee { background-color: #6f4e37; transition: 0.3s; }
+        .btn-coffee:hover { background-color: #8b6245; transform: translateY(-2px); }
+    </style>
+</head>
+<body class="text-gray-200 font-sans">
+
+    <nav class="flex justify-between items-center p-6 max-w-7xl mx-auto">
+        <div class="flex items-center gap-2">
+            <div class="w-10 h-10 bg-[#6f4e37] rounded-full flex items-center justify-center">
+                <i class="fas fa-cat text-white"></i>
+            </div>
+            <span class="text-xl font-bold tracking-wider">CAATFFEE</span>
+        </div>
+        <button onclick="loginDiscord()" class="glass px-6 py-2 rounded-full border border-[#6f4e37] text-sm font-medium hover:bg-[#6f4e37] transition">
+            <i class="fab fa-discord mr-2"></i> Iniciar Sesión
+        </button>
+    </nav>
+
+    <main class="max-w-4xl mx-auto text-center mt-20 px-6">
+        <h1 class="text-5xl md:text-7xl font-extrabold mb-6 text-white">
+            El mejor acompañante para tu <span class="text-[#d2b48c]">servidor</span> ☕
+        </h1>
+        <p class="text-lg text-gray-400 mb-10">
+            Gestiona tu comunidad con elegancia, eficiencia y funciones exclusivas para tus miembros más leales.
+        </p>
+        
+        <div class="flex flex-wrap justify-center gap-4">
+            <a href="#" class="btn-coffee px-8 py-4 rounded-xl font-bold text-white shadow-lg">
+                <i class="fas fa-plus mr-2"></i> Añadir a Discord
+            </a>
+            <a href="https://discord.gg/7dE5hZT77g" class="glass px-8 py-4 rounded-xl font-bold hover:bg-white/10 transition">
+                <i class="fas fa-comments mr-2"></i> Servidor de Soporte
+            </a>
+        </div>
+    </main>
+
+    <section class="max-w-4xl mx-auto mt-32 px-6">
+        <div class="coffee-gradient p-1 rounded-3xl">
+            <div class="bg-[#151515] p-10 rounded-[calc(1.5rem-1px)] text-center">
+                <h2 class="text-3xl font-bold mb-4 text-[#d2b48c]">✨ Hazte Premium</h2>
+                <p class="mb-8 text-gray-400 text-lg">Desbloquea comandos exclusivos y mejora la experiencia de tu comunidad.</p>
+                <a href="https://www.patreon.com/15613390/join" target="_blank" class="inline-block bg-[#d2b48c] text-[#2c1b10] px-10 py-3 rounded-full font-black hover:scale-105 transition">
+                    SUSCRIBIRSE AHORA
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="mt-40 border-t border-white/5 py-12 text-center">
+        <div class="flex justify-center gap-8 mb-6 text-sm text-gray-500">
+            <a href="https://raw.githubusercontent.com/caatffee/Caatffee-Legal/refs/heads/main/privacidad.md" class="hover:text-[#d2b48c]">Privacidad</a>
+            <a href="https://raw.githubusercontent.com/caatffee/Caatffee-Legal/refs/heads/main/terminos.md" class="hover:text-[#d2b48c]">Términos</a>
+        </div>
+        <p class="text-xs text-gray-600">© 2026 Caatffee Bot. No afiliado oficialmente con Discord Inc.</p>
+    </footer>
+
+    <script>
+        function loginDiscord() {
+            alert("Redirigiendo a Discord OAuth2... (Configura tu Client ID en el Developer Portal)");
+            // Aquí irá tu link de OAuth2 generado en el panel de desarrollador
+        }
+    </script>
+</body>
+</html>
