@@ -3,122 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caatffee Bot | Oficial</title>
+    <title>Caatffee Bot | Official Site</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --cafe-oscuro: #2c1b10;
-            --cafe-medio: #6f4e37;
-            --cafe-claro: #d2b48c;
-        }
-        body { background-color: #0a0a0a; scroll-behavior: smooth; }
-        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .card-feature { transition: 0.4s; border-bottom: 3px solid transparent; }
-        .card-feature:hover { transform: translateY(-10px); background: rgba(111, 78, 55, 0.1); border-color: var(--cafe-medio); }
-        .hero-gradient { background: radial-gradient(circle at top, rgba(111, 78, 55, 0.15) 0%, transparent 70%); }
-        .btn-premium { background: linear-gradient(45deg, var(--cafe-medio), var(--cafe-claro)); color: var(--cafe-oscuro); font-weight: 800; }
-        .btn-premium:hover { filter: brightness(1.1); transform: scale(1.05); }
+        :root { --p-cafe: #6f4e37; --p-crema: #d2b48c; --p-bg: #050505; }
+        body { background-color: var(--p-bg); scroll-behavior: smooth; overflow-x: hidden; }
+        .glass-nav { background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .hero-title { background: linear-gradient(to right, #ffffff, #d2b48c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .card-service { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.4s ease; }
+        .card-service:hover { border-color: var(--p-cafe); transform: translateY(-5px); background: rgba(111, 78, 55, 0.05); }
+        .btn-main { background: var(--p-cafe); transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(111, 78, 55, 0.3); }
+        .btn-main:hover { background: #8b6245; transform: scale(1.02); box-shadow: 0 6px 20px rgba(111, 78, 55, 0.4); }
+        #sidebar { transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1); }
+        .input-field { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); outline: none; transition: 0.3s; }
+        .input-field:focus { border-color: var(--p-cafe); background: rgba(255, 255, 255, 0.05); }
     </style>
 </head>
 <body class="text-gray-100 font-sans">
 
-    <header class="hero-gradient min-h-screen flex flex-col items-center justify-center px-6 relative overflow-hidden">
-        <nav class="absolute top-0 w-full flex justify-between items-center p-8 max-w-7xl">
+    <nav class="fixed top-0 w-full z-50 glass-nav px-8 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <img src="https://i.postimg.cc/Z52Gnst1/file-00000000020c720eac74ed17c583766c-(3)-(1)-(1)-(1).png" class="w-10 h-10 rounded-full border-2 border-[#6f4e37]" alt="Logo">
-                <span class="text-xl font-black tracking-tighter">CAATFFEE</span>
+                <img src="https://i.postimg.cc/Z52Gnst1/file-00000000020c720eac74ed17c583766c-(3)-(1)-(1)-(1).png" class="w-10 h-10 rounded-full border border-white/10" alt="Logo">
+                <span class="text-xl font-bold tracking-widest uppercase">Caatffee</span>
             </div>
-            <div class="hidden md:flex gap-8 text-sm font-medium text-gray-400">
-                <a href="#features" class="hover:text-[#d2b48c]">Funciones</a>
-                <a href="#premium" class="hover:text-[#d2b48c]">Premium</a>
-                <a href="https://discord.gg/7dE5hZT77g" class="hover:text-[#d2b48c]">Soporte</a>
+            <div class="flex items-center gap-8">
+                <div class="hidden md:flex gap-4 text-lg">
+                    <span>🇲🇽</span><span class="opacity-40">🇺🇸</span><span class="opacity-40">🇧🇷</span>
+                </div>
+                <button onclick="toggleSidebar()" class="text-2xl hover:text-[#d2b48c] transition-colors">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
-            <button class="glass px-6 py-2 rounded-full text-sm font-bold border border-[#6f4e37] hover:bg-[#6f4e37] transition">Login</button>
-        </nav>
-
-        <img src="https://i.postimg.cc/Z52Gnst1/file-00000000020c720eac74ed17c583766c-(3)-(1)-(1)-(1).png" 
-             class="w-40 h-40 md:w-56 md:h-56 rounded-full shadow-2xl mb-8 animate__animated animate__zoomIn border-4 border-[#6f4e37]/30" alt="Caatffee Logo">
-        
-        <h1 class="text-5xl md:text-8xl font-black text-center animate__animated animate__fadeInUp">
-            El arte de la <span class="text-[#d2b48c]">Gestión</span>
-        </h1>
-        <p class="mt-6 text-gray-400 text-lg md:text-xl max-w-2xl text-center animate__animated animate__fadeInUp animate__delay-1s">
-            Caatffee no es solo un bot, es la experiencia premium que tu comunidad de Discord merece. Café, orden y elegancia.
-        </p>
-
-        <div class="mt-10 flex flex-wrap gap-4 justify-center animate__animated animate__fadeInUp animate__delay-1s">
-            <a href="#" class="bg-white text-black px-10 py-4 rounded-2xl font-bold flex items-center gap-2 hover:bg-[#d2b48c] transition duration-300">
-                <i class="fab fa-discord"></i> Invitar Bot
-            </a>
-            <a href="https://discord.gg/7dE5hZT77g" class="glass px-10 py-4 rounded-2xl font-bold hover:bg-white/5 transition">
-                Soporte
-            </a>
         </div>
-    </header>
+    </nav>
 
-    <section id="features" class="py-32 px-6 max-w-7xl mx-auto">
-        <h2 class="text-center text-4xl font-bold mb-20 text-[#d2b48c]">¿Por qué elegir Caatffee?</h2>
-        <div class="grid md:grid-cols-3 gap-8">
-            <div class="glass p-8 rounded-3xl card-feature">
-                <i class="fas fa-shield-halved text-4xl mb-6 text-[#6f4e37]"></i>
-                <h3 class="text-xl font-bold mb-3">Seguridad Total</h3>
-                <p class="text-gray-400">Protección avanzada contra ataques y spam, manteniendo tu servidor seguro 24/7.</p>
-            </div>
-            <div class="glass p-8 rounded-3xl card-feature">
-                <i class="fas fa-gem text-4xl mb-6 text-[#6f4e37]"></i>
-                <h3 class="text-xl font-bold mb-3">Gestión Premium</h3>
-                <p class="text-gray-400">Sistema automatizado para dar roles exclusivos a tus Server Boosters y suscriptores.</p>
-            </div>
-            <div class="glass p-8 rounded-3xl card-feature">
-                <i class="fas fa-bolt text-4xl mb-6 text-[#6f4e37]"></i>
-                <h3 class="text-xl font-bold mb-3">Ultra Rápido</h3>
-                <p class="text-gray-400">Latencia mínima para que los comandos respondan al instante sin esperas.</p>
-            </div>
+    <div id="sidebar" class="fixed top-0 right-0 h-full w-80 bg-[#0a0a0a] z-[60] p-12 translate-x-full border-l border-white/5 shadow-2xl">
+        <button onclick="toggleSidebar()" class="text-4xl absolute top-6 right-6 text-gray-500 hover:text-white">&times;</button>
+        <div class="flex flex-col gap-8 mt-16">
+            <a href="#inicio" onclick="toggleSidebar()" class="text-xl font-semibold hover:text-[#d2b48c]">Inicio</a>
+            <a href="#nosotros" onclick="toggleSidebar()" class="text-xl font-semibold hover:text-[#d2b48c]">¿Qué es Caatffee?</a>
+            <a href="#sugerencias" onclick="toggleSidebar()" class="text-xl font-semibold hover:text-[#d2b48c]">Sugerencias</a>
+            <hr class="border-white/5">
+            <a href="https://raw.githubusercontent.com/caatffee/Caatffee-Legal/refs/heads/main/terminos.md" class="text-sm text-gray-500 uppercase tracking-widest">Términos y Condiciones</a>
+        </div>
+    </div>
+
+    <section id="inicio" class="min-h-screen flex flex-col items-center justify-center px-6 text-center pt-20">
+        <img src="https://i.postimg.cc/Z52Gnst1/file-00000000020c720eac74ed17c583766c-(3)-(1)-(1)-(1).png" class="w-48 h-48 rounded-full mb-10 animate__animated animate__fadeIn border-4 border-white/5 shadow-2xl">
+        <h1 class="text-6xl md:text-8xl font-black mb-6 hero-title animate__animated animate__fadeInUp">CAATFFEE</h1>
+        <p class="max-w-2xl text-gray-400 text-xl mb-12 animate__animated animate__fadeInUp animate__delay-1s">La solución integral de automatización y gestión para comunidades exclusivas de Discord.</p>
+        <div class="flex flex-wrap gap-6 animate__animated animate__fadeInUp animate__delay-1s">
+            <a href="https://discord.com/oauth2/authorize?client_id=1475842620063485993&permissions=8&integration_type=0&scope=bot+applications.commands" class="btn-main px-12 py-4 rounded-xl font-bold text-lg">Invitar al Servidor</a>
+            <a href="https://www.patreon.com/15613390/join" class="px-12 py-4 rounded-xl font-bold text-lg border border-white/10 hover:bg-white/5 transition">Membresía Patreon</a>
         </div>
     </section>
 
-    <section id="premium" class="py-32 px-6">
-        <div class="max-w-5xl mx-auto glass p-1 rounded-[40px] bg-gradient-to-r from-[#6f4e37]/20 to-transparent">
-            <div class="bg-[#0f0f0f] rounded-[38px] p-12 md:p-20 flex flex-col md:flex-row items-center gap-12">
-                <div class="flex-1 text-center md:text-left">
-                    <span class="text-[#d2b48c] font-black tracking-widest text-sm">MEMBRESÍA EXCLUSIVA</span>
-                    <h2 class="text-4xl md:text-6xl font-bold mt-4 mb-6 leading-tight">Lleva tu servidor al <span class="italic font-light">Siguiente Nivel</span></h2>
-                    <p class="text-gray-400 text-lg mb-10">Accede a comandos de personalización únicos y apoyo directo del desarrollador.</p>
-                    <a href="https://www.patreon.com/15613390/join" class="btn-premium px-12 py-5 rounded-2xl inline-block shadow-2xl">
-                        OBTENER PREMIUM <i class="fas fa-external-link-alt ml-2"></i>
-                    </a>
-                </div>
-                <div class="w-64 h-64 glass rounded-full flex items-center justify-center border-[#d2b48c]/20 border-8">
-                    <i class="fas fa-crown text-8xl text-[#d2b48c] animate-bounce"></i>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="py-20 border-t border-white/5">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-10">
+    <section id="nosotros" class="py-32 px-6 max-w-6xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-16 items-center">
             <div>
-                <p class="text-xl font-black mb-2">CAATFFEE</p>
-                <p class="text-gray-500 text-sm">Diseñado con elegancia para Discord.</p>
+                <h2 class="text-4xl font-bold mb-8 text-[#d2b48c]">Excelencia en Moderación</h2>
+                <p class="text-gray-400 text-lg leading-relaxed mb-6">Caatffee ha sido desarrollado bajo estándares de alta eficiencia, proporcionando herramientas de seguridad, economía personalizada y sistemas de fidelización que transforman servidores convencionales en comunidades de élite.</p>
+                <ul class="space-y-4">
+                    <li class="flex items-center gap-3"><i class="fas fa-check text-[#6f4e37]"></i> Infraestructura de baja latencia</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-check text-[#6f4e37]"></i> Protección avanzada Anti-Spam</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-check text-[#6f4e37]"></i> Integración nativa con comandos Slash</li>
+                </ul>
             </div>
-            <div class="flex gap-10 text-sm text-gray-400">
-                <a href="https://raw.githubusercontent.com/caatffee/Caatffee-Legal/refs/heads/main/privacidad.md" class="hover:text-white">Privacidad</a>
-                <a href="https://raw.githubusercontent.com/caatffee/Caatffee-Legal/refs/heads/main/terminos.md" class="hover:text-white">Términos</a>
-                <a href="https://discord.gg/7dE5hZT77g" class="hover:text-white">Soporte</a>
-            </div>
-            <div class="flex gap-4">
-                <div class="w-10 h-10 glass rounded-full flex items-center justify-center hover:bg-[#6f4e37] transition cursor-pointer">
-                    <i class="fab fa-discord text-sm"></i>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="card-service p-8 rounded-3xl text-center">
+                    <i class="fas fa-shield-alt text-3xl mb-4 text-[#6f4e37]"></i>
+                    <p class="font-bold">Seguridad</p>
                 </div>
-                <div class="w-10 h-10 glass rounded-full flex items-center justify-center hover:bg-[#6f4e37] transition cursor-pointer">
-                    <i class="fab fa-patreon text-sm"></i>
+                <div class="card-service p-8 rounded-3xl text-center">
+                    <i class="fas fa-coins text-3xl mb-4 text-[#6f4e37]"></i>
+                    <p class="font-bold">Economía</p>
+                </div>
+                <div class="card-service p-8 rounded-3xl text-center">
+                    <i class="fas fa-bolt text-3xl mb-4 text-[#6f4e37]"></i>
+                    <p class="font-bold">Velocidad</p>
+                </div>
+                <div class="card-service p-8 rounded-3xl text-center">
+                    <i class="fas fa-star text-3xl mb-4 text-[#6f4e37]"></i>
+                    <p class="font-bold">Premium</p>
                 </div>
             </div>
         </div>
-        <p class="text-center mt-20 text-xs text-gray-700 font-medium tracking-[0.2em]">© 2026 CAATFFEE | TODOS LOS DERECHOS RESERVADOS</p>
+    </section>
+
+    <section id="sugerencias" class="py-32 px-6 bg-[#080808]">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-4xl font-bold mb-4 text-center">Buzón de Sugerencias</h2>
+            <p class="text-center text-gray-500 mb-12">Su opinión es fundamental para el desarrollo continuo de Caatffee.</p>
+            
+            <form action="https://formspree.io/f/mqaebrjr" method="POST" class="space-y-6">
+                <input type="hidden" name="_replyto" value="caatffee@gmail.com">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-bold text-gray-400">Usuario de Discord</label>
+                        <input type="text" name="discord_user" required class="input-field p-4 rounded-xl" placeholder="Nombre#0000">
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-bold text-gray-400">Categoría</label>
+                        <select name="category" class="input-field p-4 rounded-xl">
+                            <option>Mejora de Comando</option>
+                            <option>Reporte de Error</option>
+                            <option>Sugerencia General</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label class="text-sm font-bold text-gray-400">Mensaje</label>
+                    <textarea name="message" rows="5" required class="input-field p-4 rounded-xl" placeholder="Describa su sugerencia detalladamente..."></textarea>
+                </div>
+                <button type="submit" class="w-full btn-main py-5 rounded-xl font-bold text-lg tracking-widest uppercase">Enviar Comunicación</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="py-12 border-t border-white/5 text-center">
+        <p class="text-gray-600 text-sm font-medium tracking-widest uppercase">© 2026 Caatffee Systems. All Rights Reserved.</p>
     </footer>
 
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('translate-x-full');
+        }
+    </script>
 </body>
 </html>
