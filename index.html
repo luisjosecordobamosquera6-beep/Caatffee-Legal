@@ -8,27 +8,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { 
-            --rosado-piel: #f5d0c5; 
-            --cafe-claro: #d2b48c; 
-            --cafe-oscuro: #6f4e37; 
-        }
+        :root { --rosado-piel: #f5d0c5; --cafe-claro: #d2b48c; --cafe-oscuro: #6f4e37; }
         body { 
             background: url('https://i.postimg.cc/63VC2jmY/Fondo_Plantilla.png') no-repeat center center fixed; 
-            background-size: cover;
-            font-family: 'Inter', sans-serif;
-            color: white;
-            margin: 0;
+            background-size: cover; font-family: 'Inter', sans-serif; color: white; margin: 0;
         }
-        .glass-container { 
-            background: rgba(20, 15, 12, 0.85); 
-            backdrop-filter: blur(12px); 
-            border: 1px solid rgba(245, 208, 197, 0.2);
-        }
+        .glass-container { background: rgba(20, 15, 12, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(245, 208, 197, 0.2); }
         .caat-text { color: #fff5f2; text-shadow: 0 0 10px rgba(245, 208, 197, 0.4); }
         .ffee-text { color: var(--cafe-claro); }
         
-        /* Sistema de Secciones (Rutas) */
         .page-section { display: none; }
         .page-section.active { display: block; }
 
@@ -41,16 +29,15 @@
             margin: 120px auto 50px;
             box-shadow: 0 25px 60px rgba(0,0,0,0.8);
         }
-        .input-form {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--cafe-oscuro);
-            transition: 0.3s;
-        }
-        .input-form:focus {
-            border-color: var(--rosado-piel);
-            background: rgba(255, 255, 255, 0.1);
-            outline: none;
-        }
+        .doc-card h1 { color: var(--rosado-piel); font-size: 2.5rem; font-weight: 900; margin-bottom: 1.5rem; }
+        .doc-card h3 { color: var(--cafe-claro); font-size: 1.4rem; margin-top: 2rem; border-left: 4px solid var(--rosado-piel); padding-left: 1rem; margin-bottom: 1rem; }
+        .doc-card p, .doc-card li { color: #e2e2e2; line-height: 1.8; margin-bottom: 1rem; }
+        
+        .feature-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(245, 208, 197, 0.1); transition: 0.3s; }
+        .feature-card:hover { border-color: var(--rosado-piel); transform: translateY(-5px); }
+
+        .input-form { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--cafe-oscuro); transition: 0.3s; color: white; }
+        .input-form:focus { border-color: var(--rosado-piel); outline: none; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -59,26 +46,52 @@
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex items-center gap-3">
                 <img src="https://i.postimg.cc/Z52Gnst1/file-00000000020c720eac74ed17c583766c-(3)-(1)-(1)-(1).png" class="w-10 h-10 rounded-full border border-pink-200">
-                <h1 class="text-2xl font-black uppercase tracking-tighter">
-                    <span class="caat-text">CAAT</span><span class="ffee-text">FFEE</span>
-                </h1>
+                <h1 class="text-2xl font-black uppercase"><span class="caat-text">CAAT</span><span class="ffee-text">FFEE</span></h1>
             </div>
-            <img src="https://i.postimg.cc/1zydY86X/cafecito_emoji.png" class="w-8 h-8 animate-bounce">
+            <a href="#" onclick="location.hash=''; location.reload();" class="text-xs uppercase font-bold tracking-widest hover:text-[#f5d0c5]">Inicio</a>
         </div>
     </nav>
 
     <main id="home" class="page-section active pt-40 pb-20 px-6">
-        <div class="max-w-4xl mx-auto glass-container rounded-[3rem] p-10 md:p-20 text-center animate__animated animate__fadeIn">
-            <img src="https://i.postimg.cc/Z52Gnst1/file-00000000020c720eac74ed17c583766c-(3)-(1)-(1)-(1).png" class="w-48 h-48 rounded-full mx-auto mb-8 border-4 border-[#f5d0c5]/30 shadow-2xl">
-            <h2 class="text-5xl md:text-7xl font-black mb-6">Un bot en <span class="text-[#f5d0c5]">crecimiento</span></h2>
-            <p class="text-gray-300 text-xl mb-10">Caatffee es un sistema diseñado para la confianza y la calidez en tu comunidad. Construimos algo grande para ti. ☕</p>
-            
-            <div class="flex flex-wrap justify-center gap-6 mb-16">
-                <a href="https://discord.com/oauth2/authorize?client_id=1475842620063485993&permissions=8&integration_type=0&scope=bot+applications.commands" class="bg-[#f5d0c5] text-[#6f4e37] px-12 py-5 rounded-2xl font-black uppercase text-lg hover:scale-105 transition">Invitar al Bot</a>
-                <a href="https://discord.gg/7dE5hZT77g" class="bg-white/5 border border-white/10 px-12 py-5 rounded-2xl font-bold uppercase hover:bg-white/10 transition">Soporte</a>
+        <div class="max-w-5xl mx-auto text-center">
+            <div class="glass-container rounded-[3rem] p-10 md:p-20 mb-12 animate__animated animate__fadeIn">
+                <img src="https://i.postimg.cc/Z52Gnst1/file-00000000020c720eac74ed17c583766c-(3)-(1)-(1)-(1).png" class="w-48 h-48 rounded-full mx-auto mb-8 border-4 border-[#f5d0c5]/30 shadow-2xl">
+                <h2 class="text-5xl md:text-7xl font-black mb-6">Un bot en <span class="text-[#f5d0c5]">crecimiento</span></h2>
+                <p class="text-gray-300 text-xl mb-10">Confianza y calidez para tu comunidad. ☕</p>
+                <div class="flex flex-wrap justify-center gap-6">
+                    <a href="https://discord.com/oauth2/authorize?client_id=1475842620063485993&permissions=8&scope=bot+applications.commands" class="bg-[#f5d0c5] text-[#6f4e37] px-12 py-5 rounded-2xl font-black uppercase hover:scale-105 transition">Invitar</a>
+                    <a href="https://discord.gg/7dE5hZT77g" class="bg-white/5 border border-white/10 px-12 py-5 rounded-2xl font-bold uppercase hover:bg-white/10 transition">Soporte</a>
+                </div>
             </div>
 
-            <div class="mt-20 text-left border-t border-white/10 pt-16">
+            <div class="grid md:grid-cols-3 gap-6 mb-20">
+                <div class="feature-card p-8 rounded-3xl">
+                    <i class="fas fa-calendar-alt text-3xl text-[#f5d0c5] mb-4"></i>
+                    <h4 class="font-bold text-xl mb-2">Eventos</h4>
+                    <p class="text-gray-400 text-sm">Crea eventos personalizados y cronometrados mediante MD.</p>
+                </div>
+                <div class="feature-card p-8 rounded-3xl">
+                    <i class="fas fa-comment-dots text-3xl text-[#f5d0c5] mb-4"></i>
+                    <h4 class="font-bold text-xl mb-2">Mensajes</h4>
+                    <p class="text-gray-400 text-sm">Envía mensajes y bienvenidas personalizadas con tu propio estilo.</p>
+                </div>
+                <div class="feature-card p-8 rounded-3xl">
+                    <i class="fas fa-tools text-3xl text-[#f5d0c5] mb-4"></i>
+                    <h4 class="font-bold text-xl mb-2">Gestión</h4>
+                    <p class="text-gray-400 text-sm">Crea canales y roles personalizados con permisos de administrador.</p>
+                </div>
+            </div>
+
+            <div class="mb-20 glass-container rounded-[2.5rem] overflow-hidden">
+                <img src="https://i.postimg.cc/rmKFK1cD/Banner_Premiun.jpg" class="w-full h-48 object-cover">
+                <div class="p-10">
+                    <h3 class="text-3xl font-black mb-4 uppercase">Desbloquea el poder <span class="text-[#f5d0c5]">Premium</span></h3>
+                    <p class="text-gray-300 mb-8 max-w-2xl mx-auto">Obtén funciones avanzadas de personalización, respuesta prioritaria del bot y soporte exclusivo para tu servidor.</p>
+                    <a href="https://www.patreon.com/15613390/join" target="_blank" class="bg-gradient-to-r from-[#f5d0c5] to-[#d2b48c] text-[#6f4e37] px-16 py-4 rounded-xl font-black uppercase shadow-lg hover:brightness-110 transition">Ver Planes en Patreon</a>
+                </div>
+            </div>
+
+            <div class="glass-container rounded-[2.5rem] p-10 md:p-16 text-left mb-20">
                 <h3 class="text-2xl font-bold mb-8 flex items-center gap-3">
                     <img src="https://i.postimg.cc/1zydY86X/cafecito_emoji.png" class="w-6 h-6"> Buzón de Sugerencias
                 </h3>
@@ -87,7 +100,7 @@
                         <input type="text" name="name" placeholder="Usuario de Discord" required class="input-form p-4 rounded-xl">
                         <input type="email" name="email" placeholder="Tu Correo" class="input-form p-4 rounded-xl">
                     </div>
-                    <textarea name="message" rows="4" placeholder="¿Cómo mejoramos?" required class="input-form p-4 rounded-xl"></textarea>
+                    <textarea name="message" rows="4" placeholder="¿Cómo podemos mejorar a Caatffee?" required class="input-form p-4 rounded-xl"></textarea>
                     <button type="submit" class="bg-[#6f4e37] py-4 rounded-xl font-bold uppercase hover:bg-[#8b6245] transition">Enviar Reporte</button>
                 </form>
             </div>
@@ -96,39 +109,58 @@
 
     <section id="terminos" class="page-section px-6">
         <div class="doc-card animate__animated animate__fadeInUp">
-            <h1 class="text-[#f5d0c5] font-black text-4xl mb-6">TÉRMINOS DE SERVICIO</h1>
+            <h1>Términos de Servicio</h1>
             <p><strong>Última actualización: 24 de febrero de 2026</strong></p>
-            <h3 class="text-[#d2b48c] text-xl font-bold mt-6 mb-2">1. Uso Aceptable</h3>
-            <p>Usted se compromete a no utilizar el bot para spam, acoso o actividades maliciosas.</p>
-            <h3 class="text-[#d2b48c] text-xl font-bold mt-6 mb-2">2. Donaciones Premium</h3>
-            <p>Los pagos por servicios Premium son donaciones para el mantenimiento y no son reembolsables.</p>
-            <a href="#" onclick="location.hash=''; location.reload();" class="mt-8 inline-block text-[#f5d0c5] font-bold">← Volver al Inicio</a>
+            
+            <h3>1. Uso Aceptable</h3>
+            <p>El usuario se compromete a utilizar el bot de manera responsable. Queda prohibido el uso de Caatffee para realizar spam, ataques o cualquier acción que infrinja las normas de Discord. Las funciones administrativas solo pueden ser ejecutadas por usuarios con permisos de Administrador y Propietario del servidor.</p>
+            
+            <h3>2. Servicios Premium</h3>
+            <p>Los pagos realizados por servicios Premium se destinan exclusivamente al mantenimiento y mejora del bot. Estos pagos son considerados donaciones de apoyo y <strong>!no son reembolsables¡</strong>. El estado Premium no exime al usuario de cumplir las normas de comportamiento.</p>
+
+            <h3>3. Responsabilidad de Contenido</h3>
+            <p>Caatffee no se hace responsable del mal uso por parte de los usuarios (por ejemplo, envío de mensajes ofensivos). Aunque contamos con sistemas para evitar lenguaje inapropiado, la responsabilidad final recae en quien emite el mensaje.</p>
+
+            <h3>4. Restricciones de Usuario</h3>
+            <p>No se permitirá bajo ninguna circunstancia el uso de funciones de personalización para crear contenido malicioso o engañoso. Los usuarios Premium que infrinjan esto podrán perder sus beneficios sin previo aviso.</p>
+
+            <h3>5. Modificaciones del Servicio</h3>
+            <p>Nos reservamos el derecho de actualizar estas funciones y términos para garantizar la estabilidad del bot. El uso continuado de Caatffee implica la aceptación de estos cambios.</p>
+
+            <a href="#" onclick="location.hash=''; location.reload();" class="inline-block mt-8 text-[#f5d0c5] font-bold underline">← Volver al inicio</a>
         </div>
     </section>
 
     <section id="privacidad" class="page-section px-6">
         <div class="doc-card animate__animated animate__fadeInUp">
-            <h1 class="text-[#f5d0c5] font-black text-4xl mb-6">POLÍTICA DE PRIVACIDAD</h1>
+            <h1>Política de Privacidad</h1>
             <p><strong>Última actualización: 24 de febrero de 2026</strong></p>
-            <h3 class="text-[#d2b48c] text-xl font-bold mt-6 mb-2">1. Datos Recopilados</h3>
-            <p>Recopilamos IDs de Discord y de servidor únicamente para el funcionamiento técnico del bot.</p>
-            <h3 class="text-[#d2b48c] text-xl font-bold mt-6 mb-2">2. Seguridad</h3>
-            <p>Tus datos están protegidos y nunca serán vendidos a terceros.</p>
-            <a href="#" onclick="location.hash=''; location.reload();" class="mt-8 inline-block text-[#f5d0c5] font-bold">← Volver al Inicio</a>
+
+            <h3>1. Recopilación de Identificadores</h3>
+            <p>Recopilamos el ID de los usuarios y servidores exclusivamente para el correcto funcionamiento técnico y la asignación de permisos administrativos necesarios para las funciones de personalización.</p>
+
+            <h3>2. Almacenamiento Temporal</h3>
+            <p>Una vez que el usuario termina de configurar una acción, el bot no retiene ningún dato personal. La única excepción son los <strong>eventos personalizados y cronometrados</strong>, donde el bot debe mantener la información para ejecutar la acción en la fecha programada.</p>
+
+            <h3>3. Terceros y Privacidad</h3>
+            <p>Ninguno de tus datos será compartido con servicios de terceros o personas ajenas al equipo de desarrollo. Tu información es tratada con total confidencialidad.</p>
+
+            <h3>4. Control del Usuario</h3>
+            <p>En cualquier momento puedes expulsar al bot de tu servidor. Si lo haces, los cambios realizados permanecerán en tu servidor, pero el bot eliminará cualquier información almacenada y no podrá realizar más cambios.</p>
+
+            <h3>5. Seguridad de Datos</h3>
+            <p>Implementamos medidas de seguridad para proteger los datos de eventos y configuraciones contra accesos no autorizados mientras estén activos en nuestra base de datos.</p>
+
+            <a href="#" onclick="location.hash=''; location.reload();" class="inline-block mt-8 text-[#f5d0c5] font-bold underline">← Volver al inicio</a>
         </div>
     </section>
 
     <footer class="w-full glass-container border-t border-white/10 p-10 mt-auto">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-            <div class="flex items-center gap-2">
-                <span class="font-black uppercase text-xl"><span class="caat-text">CAAT</span><span class="ffee-text">FFEE</span></span>
-            </div>
-            <div class="text-gray-400 font-medium uppercase tracking-widest text-center">
-                © 2026 Caatffee Todos los derechos reservados
-            </div>
+            <div class="text-gray-400">© 2026 Caatffee Todos los derechos reservados</div>
             <div class="flex gap-8 font-bold uppercase text-sm">
-                <a href="#terminos" class="hover:text-[#f5d0c5] transition">Legal / Términos</a>
-                <a href="#privacidad" class="hover:text-[#f5d0c5] transition">Privacidad</a>
+                <a href="#terminos" class="text-[#f5d0c5] hover:underline">Términos</a>
+                <a href="#privacidad" class="text-[#f5d0c5] hover:underline">Privacidad</a>
             </div>
         </div>
     </footer>
@@ -140,6 +172,7 @@
             if (hash === '#terminos') document.getElementById('terminos').classList.add('active');
             else if (hash === '#privacidad') document.getElementById('privacidad').classList.add('active');
             else document.getElementById('home').classList.add('active');
+            window.scrollTo(0,0);
         }
         window.addEventListener('hashchange', router);
         window.onload = router;
