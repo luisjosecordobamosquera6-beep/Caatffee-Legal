@@ -1257,7 +1257,11 @@ footer{position:relative;z-index:2;border-top:1px solid var(--glass-border);padd
         <div>
           <label>Canal de destino</label>
           <select id="sp-channel-sel">
-  <option value="">— Cargando canales... —</option>
+            <option value="">— Selecciona un canal (simulado) —</option>
+            <option value="general"># general</option>
+            <option value="anuncios"># anuncios</option>
+            <option value="bienvenida"># bienvenida</option>
+            <option value="bot-commands"># bot-commands</option>
           </select>
         </div>
         <div>
@@ -1390,8 +1394,7 @@ document.addEventListener('mousemove',e=>{tX=e.clientX;tY=e.clientY;if(tP)return
    DISCORD OAUTH2 LOGIN
 ══════════════════════════════════════ */
 const DISCORD_CLIENT_ID = '1475842620063485993';
-const BOT_API_URL = 'https://scaldic-vannessa-ungained.ngrok-free.dev';
-   
+
 function discordLogin(){
   const redirectUri = encodeURIComponent(location.origin + location.pathname);
   const state = Math.random().toString(36).slice(2);
@@ -1668,12 +1671,12 @@ function openSrvPanel(id, name, iconUrl, initials, isOwner, members, tab){
   document.getElementById('sp-info-rows').innerHTML = infoHtml;
 
   // Reset message form
-  document.getElementById('sp-channel-sel').value = '';
   document.getElementById('sp-msg-title').value = '';
   document.getElementById('sp-msg-body').value = '';
   document.getElementById('sp-msg-color').value = '#ffb6c1';
   updateMsgPreview();
-   loadChannels(id);
+  // Cargar canales reales del servidor
+  loadChannels(id);
 
   // Switch to requested tab
   switchSrvTab(tab || 'stats', document.querySelector(`.srv-tab${tab ? '' : '.active'}`));
@@ -1724,112 +1727,97 @@ function escHtml(s){
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-async function loadChannels(guildId){
-  const token = localStorage.getItem('discord_token');
-  if(!token) return;
-  const sel = document.getElementById('sp-channel-sel');
-  sel.innerHTML = '<option value="">— Cargando canales... —</option>';
-  try{
-    const res = await fetch(`${BOT_API_URL}/api/guild/${guildId}/channels`,{
-      headers:{'Authorization':`Bearer ${token}`,'ngrok-skip-browser-warning':'1'}
-    });
-    const data = await res.json();
-    if(!res.ok || !data.channels){
-      sel.innerHTML = `<option value="">— ${data.error||'Error cargando canales'} —</option>`;
-      return;
-    }
-    const byCategory = {};
-    for(const ch of data.channels){
-      const cat = ch.category||'Sin categoría';
-      if(!byCategory[cat]) byCategory[cat]=[];
-      byCategory[cat].push(ch);
-    }
-    sel.innerHTML = '<option value="">— Selecciona un canal —</option>';
-    for(const [cat,channels] of Object.entries(byCategory)){
-      const g = document.createElement('optgroup');
-      g.label = cat;
-      for(const ch of channels){
-        const o = document.createElement('option');
-        o.value = ch.id;
-        o.textContent = `${ch.type==='announcement'?'📢':'#'} ${ch.name}`;
-        g.appendChild(o);
-      }
-      sel.appendChild(g);
-    }
-  }catch(e){
-    sel.innerHTML='<option value="">— Bot no disponible —</option>';
-  }
-}
+const BOT_API_URL = 'https://scaldic-vannessa-ungained.ngrok-free.dev';
 
 async function loadChannels(guildId){
-  const token = localStorage.getItem('discord_token');
-  if(!token) return;
   const sel = document.getElementById('sp-channel-sel');
-  sel.innerHTML = '<option value="">— Cargando canales... —</option>';
-  try{
-    const res = await fetch(`${BOT_API_URL}/api/guild/${guildId}/channels`,{
-      headers:{'Authorization':`Bearer ${token}`,'ngrok-skip-browser-warning':'1'}
+  sel.innerHTML = '<option value="">Cargando canales...</option>';
+  sel.disabled = true;
+  const token = localStorage.getItem('discord_token');
+  if(!token){ sel.innerHTML = '<option value="">Inicia sesión primero</option>'; return; }
+  try {
+    const res = await fetch(`${BOT_API_URL}/api/guild/${guildId}/channels`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'ngrok-skip-browser-warning': '1'
+      }
     });
     const data = await res.json();
-    if(!res.ok || !data.channels){
-      sel.innerHTML = `<option value="">— ${data.error||'Error cargando canales'} —</option>`;
+    if(!res.ok) throw new Error(data.error || 'Error cargando canales');
+    if(!data.channels || data.channels.length === 0){
+      sel.innerHTML = '<option value="">Sin canales disponibles</option>';
+      sel.disabled = false;
       return;
     }
+    // Agrupar por categoría
     const byCategory = {};
-    for(const ch of data.channels){
-      const cat = ch.category||'Sin categoría';
-      if(!byCategory[cat]) byCategory[cat]=[];
+    data.channels.forEach(ch => {
+      const cat = ch.category || 'Sin categoría';
+      if(!byCategory[cat]) byCategory[cat] = [];
       byCategory[cat].push(ch);
-    }
+    });
     sel.innerHTML = '<option value="">— Selecciona un canal —</option>';
-    for(const [cat,channels] of Object.entries(byCategory)){
-      const g = document.createElement('optgroup');
-      g.label = cat;
-      for(const ch of channels){
-        const o = document.createElement('option');
-        o.value = ch.id;
-        o.textContent = `${ch.type==='announcement'?'📢':'#'} ${ch.name}`;
-        g.appendChild(o);
-      }
-      sel.appendChild(g);
-    }
-  }catch(e){
-    sel.innerHTML='<option value="">— Bot no disponible —</option>';
+    Object.entries(byCategory).forEach(([cat, channels]) => {
+      const group = document.createElement('optgroup');
+      group.label = cat;
+      channels.forEach(ch => {
+        const opt = document.createElement('option');
+        opt.value = ch.id;
+        opt.textContent = `# ${ch.name}`;
+        group.appendChild(opt);
+      });
+      sel.appendChild(group);
+    });
+    sel.disabled = false;
+  } catch(e) {
+    sel.innerHTML = `<option value="">⚠️ ${e.message}</option>`;
+    sel.disabled = false;
+    showToast('⚠️ ' + e.message);
   }
 }
 
 async function sendServerMessage(){
   const channelId = document.getElementById('sp-channel-sel').value;
-  const body      = document.getElementById('sp-msg-body').value.trim();
-  const title     = document.getElementById('sp-msg-title').value.trim();
-  const color     = document.getElementById('sp-msg-color').value;
-  const token     = localStorage.getItem('discord_token');
+  const body    = document.getElementById('sp-msg-body').value.trim();
+  const title   = document.getElementById('sp-msg-title').value.trim();
+  const color   = document.getElementById('sp-msg-color').value;
   if(!channelId) return showToast('⚠️ Selecciona un canal de destino.');
   if(!body)      return showToast('⚠️ Escribe un mensaje antes de enviar.');
-  if(!token)     return showToast('⚠️ Debes iniciar sesión primero.');
+
+  const token = localStorage.getItem('discord_token');
+  if(!token) return showToast('⚠️ Inicia sesión primero.');
+
   const btn = document.getElementById('sp-send-btn');
   btn.disabled = true;
   btn.innerHTML = `<div class="srv-spinner" style="width:18px;height:18px;border-width:2px;border-top-color:#fff;margin:0;"></div> Enviando...`;
-  try{
-    const res = await fetch(`${BOT_API_URL}/api/send-message`,{
-      method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`,'ngrok-skip-browser-warning':'1'},
-      body: JSON.stringify({guildId:currentGuildData.id,channelId,title:title||undefined,message:body,color})
+
+  try {
+    const res = await fetch(`${BOT_API_URL}/api/send-message`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+        'ngrok-skip-browser-warning': '1'
+      },
+      body: JSON.stringify({
+        guildId:   currentGuildData.id,
+        channelId: channelId,
+        title:     title || undefined,
+        message:   body,
+        color:     color
+      })
     });
     const data = await res.json();
-    if(!res.ok){
-      showToast(`❌ ${data.error||'Error al enviar el mensaje.'}`);
-    }else{
-      showToast(`✅ Mensaje enviado en #${data.channel} — ${data.guild}`);
-      document.getElementById('sp-msg-body').value='';
-      document.getElementById('sp-msg-title').value='';
-      updateMsgPreview();
-    }
-  }catch(e){
-    showToast('❌ No se pudo conectar con el bot.');
-  }finally{
-    btn.disabled=false;
-    btn.innerHTML=`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Enviar mensaje con Caatffee`;
+    if(!res.ok) throw new Error(data.error || 'Error al enviar');
+    showToast(`✅ Mensaje enviado a #${data.channel} en ${data.guild}`);
+    document.getElementById('sp-msg-body').value = '';
+    document.getElementById('sp-msg-title').value = '';
+    updateMsgPreview();
+  } catch(e) {
+    showToast('❌ ' + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Enviar mensaje con Caatffee`;
   }
 }
 
