@@ -1731,7 +1731,7 @@ async function loadChannels(guildId){
   sel.innerHTML = '<option value="">— Cargando canales... —</option>';
   try{
     const res = await fetch(`${BOT_API_URL}/api/guild/${guildId}/channels`,{
-      headers:{'Authorization':`Bearer ${token}`}
+      headers:{'Authorization':`Bearer ${token}`,'ngrok-skip-browser-warning':'1'}
     });
     const data = await res.json();
     if(!res.ok || !data.channels){
@@ -1768,7 +1768,7 @@ async function loadChannels(guildId){
   sel.innerHTML = '<option value="">— Cargando canales... —</option>';
   try{
     const res = await fetch(`${BOT_API_URL}/api/guild/${guildId}/channels`,{
-      headers:{'Authorization':`Bearer ${token}`}
+      headers:{'Authorization':`Bearer ${token}`,'ngrok-skip-browser-warning':'1'}
     });
     const data = await res.json();
     if(!res.ok || !data.channels){
@@ -1813,7 +1813,7 @@ async function sendServerMessage(){
   try{
     const res = await fetch(`${BOT_API_URL}/api/send-message`,{
       method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`},
+      headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`,'ngrok-skip-browser-warning':'1'},
       body: JSON.stringify({guildId:currentGuildData.id,channelId,title:title||undefined,message:body,color})
     });
     const data = await res.json();
