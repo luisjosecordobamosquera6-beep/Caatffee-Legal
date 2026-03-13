@@ -1242,6 +1242,8 @@ footer{position:relative;z-index:2;border-top:1px solid var(--glass-border);padd
       <button class="srv-tab active" onclick="switchSrvTab('stats',this)">📊 Estadísticas</button>
       <button class="srv-tab" onclick="switchSrvTab('info',this)">ℹ️ Info</button>
       <button class="srv-tab" onclick="switchSrvTab('message',this)">📨 Enviar Mensaje</button>
+      <button class="srv-tab" onclick="switchSrvTab('welcome',this)">🌸 Bienvenida</button>
+      <button class="srv-tab" onclick="switchSrvTab('goodbye',this)">👋 Despedida</button>
     </div>
     <!-- STATS TAB -->
     <div class="srv-tab-content active" id="spt-stats">
@@ -1257,11 +1259,7 @@ footer{position:relative;z-index:2;border-top:1px solid var(--glass-border);padd
         <div>
           <label>Canal de destino</label>
           <select id="sp-channel-sel">
-            <option value="">— Selecciona un canal (simulado) —</option>
-            <option value="general"># general</option>
-            <option value="anuncios"># anuncios</option>
-            <option value="bienvenida"># bienvenida</option>
-            <option value="bot-commands"># bot-commands</option>
+            <option value="">— Cargando canales... —</option>
           </select>
         </div>
         <div>
@@ -1290,6 +1288,104 @@ footer{position:relative;z-index:2;border-top:1px solid var(--glass-border);padd
           Enviar mensaje con Caatffee
         </button>
         <p class="srv-msg-note">⚠️ Esta función requiere que Caatffee esté en el servidor y tenga permisos para enviar mensajes.</p>
+      </div>
+    </div>
+
+    <!-- WELCOME TAB -->
+    <div class="srv-tab-content" id="spt-welcome">
+      <div class="srv-msg-form">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+          <span style="font-size:22px;">🌸</span>
+          <div>
+            <div style="font-weight:800;font-size:15px;">Mensaje de Bienvenida</div>
+            <div style="font-size:12px;color:var(--muted);">Se envía cuando alguien se une al servidor</div>
+          </div>
+        </div>
+
+        <div>
+          <label>Canal de bienvenida</label>
+          <select id="sp-welcome-channel">
+            <option value="">— Cargando canales... —</option>
+          </select>
+        </div>
+        <div>
+          <label>Título del embed <span style="color:var(--muted);font-weight:600;font-size:11px;">(opcional)</span></label>
+          <input type="text" id="sp-welcome-title" placeholder="Ej: 🌸 ¡Bienvenido al servidor!" maxlength="256">
+        </div>
+        <div>
+          <label>Mensaje</label>
+          <textarea id="sp-welcome-msg" rows="3" placeholder="¡Bienvenido/a a {servidor}, {usuario}! 🎉&#10;Usa {usuario} para mencionar y {servidor} para el nombre"></textarea>
+        </div>
+        <div>
+          <label>URL de imagen <span style="color:var(--muted);font-weight:600;font-size:11px;">(opcional)</span></label>
+          <input type="text" id="sp-welcome-img" placeholder="https://i.imgur.com/ejemplo.png">
+        </div>
+        <div>
+          <label>Color del embed</label>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <input type="color" id="sp-welcome-color" value="#ffb6c1" style="width:48px;height:40px;padding:2px;border-radius:10px;border:1.5px solid var(--glass-border);background:var(--glass);cursor:pointer;">
+            <span style="font-size:13px;color:var(--muted);">Color del borde del embed</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="srv-msg-send" onclick="saveWelcome('activar')" style="flex:1;min-width:140px;">
+            ✅ Activar bienvenida
+          </button>
+          <button class="srv-msg-send" onclick="saveWelcome('desactivar')" style="flex:1;min-width:140px;background:linear-gradient(135deg,#555,#333);">
+            ❌ Desactivar
+          </button>
+        </div>
+        <div id="sp-welcome-status" style="font-size:13px;color:var(--muted);min-height:18px;"></div>
+        <p class="srv-msg-note">💡 Variables: <code>{usuario}</code> menciona al nuevo miembro · <code>{servidor}</code> nombre del servidor</p>
+      </div>
+    </div>
+
+    <!-- GOODBYE TAB -->
+    <div class="srv-tab-content" id="spt-goodbye">
+      <div class="srv-msg-form">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+          <span style="font-size:22px;">👋</span>
+          <div>
+            <div style="font-weight:800;font-size:15px;">Mensaje de Despedida</div>
+            <div style="font-size:12px;color:var(--muted);">Se envía cuando alguien sale del servidor</div>
+          </div>
+        </div>
+
+        <div>
+          <label>Canal de despedida</label>
+          <select id="sp-goodbye-channel">
+            <option value="">— Cargando canales... —</option>
+          </select>
+        </div>
+        <div>
+          <label>Título del embed <span style="color:var(--muted);font-weight:600;font-size:11px;">(opcional)</span></label>
+          <input type="text" id="sp-goodbye-title" placeholder="Ej: 👋 Un miembro se fue..." maxlength="256">
+        </div>
+        <div>
+          <label>Mensaje</label>
+          <textarea id="sp-goodbye-msg" rows="3" placeholder="Hasta luego, {usuario}. ¡Te echaremos de menos en {servidor}! 👋&#10;Usa {usuario} para el nombre y {servidor} para el servidor"></textarea>
+        </div>
+        <div>
+          <label>URL de imagen <span style="color:var(--muted);font-weight:600;font-size:11px;">(opcional)</span></label>
+          <input type="text" id="sp-goodbye-img" placeholder="https://i.imgur.com/ejemplo.png">
+        </div>
+        <div>
+          <label>Color del embed</label>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <input type="color" id="sp-goodbye-color" value="#9b8ea8" style="width:48px;height:40px;padding:2px;border-radius:10px;border:1.5px solid var(--glass-border);background:var(--glass);cursor:pointer;">
+            <span style="font-size:13px;color:var(--muted);">Color del borde del embed</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="srv-msg-send" onclick="saveGoodbye('activar')" style="flex:1;min-width:140px;">
+            ✅ Activar despedida
+          </button>
+          <button class="srv-msg-send" onclick="saveGoodbye('desactivar')" style="flex:1;min-width:140px;background:linear-gradient(135deg,#555,#333);">
+            ❌ Desactivar
+          </button>
+        </div>
+        <div id="sp-goodbye-status" style="font-size:13px;color:var(--muted);min-height:18px;"></div>
+        <p class="srv-msg-note">💡 Variables: <code>{usuario}</code> nombre del miembro · <code>{servidor}</code> nombre del servidor</p>
       </div>
     </div>
   </div>
@@ -1394,6 +1490,7 @@ document.addEventListener('mousemove',e=>{tX=e.clientX;tY=e.clientY;if(tP)return
    DISCORD OAUTH2 LOGIN
 ══════════════════════════════════════ */
 const DISCORD_CLIENT_ID = '1475842620063485993';
+const BOT_API_URL       = 'https://scaldic-vannessa-ungained.ngrok-free.dev';
 
 function discordLogin(){
   const redirectUri = encodeURIComponent(location.origin + location.pathname);
@@ -1677,6 +1774,8 @@ function openSrvPanel(id, name, iconUrl, initials, isOwner, members, tab){
   updateMsgPreview();
   // Cargar canales reales del servidor
   loadChannels(id);
+  loadWelcomeConfig(id);
+  loadGoodbyeConfig(id);
 
   // Switch to requested tab
   switchSrvTab(tab || 'stats', document.querySelector(`.srv-tab${tab ? '' : '.active'}`));
@@ -1819,6 +1918,190 @@ async function sendServerMessage(){
     btn.disabled = false;
     btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Enviar mensaje con Caatffee`;
   }
+}
+
+
+// ── Cargar canales en todos los selects ───────────────────────
+async function loadChannels(guildId){
+  const token = localStorage.getItem('discord_token');
+  if(!token) return;
+  const selectors = ['sp-channel-sel','sp-welcome-channel','sp-goodbye-channel'];
+  for(const selId of selectors){
+    const sel = document.getElementById(selId);
+    if(sel) sel.innerHTML = '<option value="">— Cargando canales... —</option>';
+  }
+  try{
+    const res = await fetch(`${BOT_API_URL}/api/guild/${guildId}/channels`,{
+      headers:{'Authorization':`Bearer ${token}`,'ngrok-skip-browser-warning':'1'}
+    });
+    const data = await res.json();
+    if(!res.ok || !data.channels){
+      for(const selId of selectors){
+        const sel = document.getElementById(selId);
+        if(sel) sel.innerHTML=`<option value="">— ${data.error||'Error'} —</option>`;
+      }
+      return;
+    }
+    const byCategory={};
+    for(const ch of data.channels){
+      const cat=ch.category||'Sin categoría';
+      if(!byCategory[cat]) byCategory[cat]=[];
+      byCategory[cat].push(ch);
+    }
+    for(const selId of selectors){
+      const sel=document.getElementById(selId);
+      if(!sel) continue;
+      sel.innerHTML='<option value="">— Selecciona un canal —</option>';
+      for(const [cat,channels] of Object.entries(byCategory)){
+        const g=document.createElement('optgroup');
+        g.label=cat;
+        for(const ch of channels){
+          const o=document.createElement('option');
+          o.value=ch.id;
+          o.textContent=`${ch.type==='announcement'?'📢':'#'} ${ch.name}`;
+          g.appendChild(o);
+        }
+        sel.appendChild(g);
+      }
+    }
+  }catch(e){
+    for(const selId of selectors){
+      const sel=document.getElementById(selId);
+      if(sel) sel.innerHTML='<option value="">— Bot no disponible —</option>';
+    }
+  }
+}
+
+// ── Cargar config de bienvenida guardada ───────────────────────
+async function loadWelcomeConfig(guildId){
+  const token=localStorage.getItem('discord_token');
+  if(!token) return;
+  try{
+    const res=await fetch(`${BOT_API_URL}/api/guild/${guildId}/welcome`,{
+      headers:{'Authorization':`Bearer ${token}`,'ngrok-skip-browser-warning':'1'}
+    });
+    const data=await res.json();
+    if(!res.ok||!data.config) return;
+    const c=data.config;
+    const status=document.getElementById('sp-welcome-status');
+    if(status) status.textContent=c.activo?'✅ Bienvenida activa':'❌ Bienvenida desactivada';
+    if(c.titulo)  document.getElementById('sp-welcome-title').value=c.titulo;
+    if(c.mensaje) document.getElementById('sp-welcome-msg').value=c.mensaje;
+    if(c.imagen)  document.getElementById('sp-welcome-img').value=c.imagen;
+    if(c.color)   document.getElementById('sp-welcome-color').value=c.color;
+    if(c.canalId){
+      const sel=document.getElementById('sp-welcome-channel');
+      const t=setInterval(()=>{
+        const o=sel.querySelector(`option[value="${c.canalId}"]`);
+        if(o){sel.value=c.canalId;clearInterval(t);}
+      },300);
+      setTimeout(()=>clearInterval(t),5000);
+    }
+  }catch(e){}
+}
+
+// ── Cargar config de despedida guardada ───────────────────────
+async function loadGoodbyeConfig(guildId){
+  const token=localStorage.getItem('discord_token');
+  if(!token) return;
+  try{
+    const res=await fetch(`${BOT_API_URL}/api/guild/${guildId}/goodbye`,{
+      headers:{'Authorization':`Bearer ${token}`,'ngrok-skip-browser-warning':'1'}
+    });
+    const data=await res.json();
+    if(!res.ok||!data.config) return;
+    const c=data.config;
+    const status=document.getElementById('sp-goodbye-status');
+    if(status) status.textContent=c.activo?'✅ Despedida activa':'❌ Despedida desactivada';
+    if(c.titulo)  document.getElementById('sp-goodbye-title').value=c.titulo;
+    if(c.mensaje) document.getElementById('sp-goodbye-msg').value=c.mensaje;
+    if(c.imagen)  document.getElementById('sp-goodbye-img').value=c.imagen;
+    if(c.color)   document.getElementById('sp-goodbye-color').value=c.color;
+    if(c.canalId){
+      const sel=document.getElementById('sp-goodbye-channel');
+      const t=setInterval(()=>{
+        const o=sel.querySelector(`option[value="${c.canalId}"]`);
+        if(o){sel.value=c.canalId;clearInterval(t);}
+      },300);
+      setTimeout(()=>clearInterval(t),5000);
+    }
+  }catch(e){}
+}
+
+// ── Guardar bienvenida ─────────────────────────────────────────
+async function saveWelcome(accion){
+  const token=localStorage.getItem('discord_token');
+  if(!token) return showToast('⚠️ Debes iniciar sesión primero.');
+  const status=document.getElementById('sp-welcome-status');
+  if(accion==='desactivar'){
+    if(status) status.textContent='⏳ Desactivando...';
+    try{
+      const res=await fetch(`${BOT_API_URL}/api/guild/${currentGuildData.id}/welcome`,{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`,'ngrok-skip-browser-warning':'1'},
+        body:JSON.stringify({accion:'desactivar'})
+      });
+      const data=await res.json();
+      if(res.ok){showToast('✅ Bienvenida desactivada');if(status) status.textContent='❌ Bienvenida desactivada';}
+      else{showToast(`❌ ${data.error||'Error'}`);if(status) status.textContent='';}
+    }catch(e){showToast('❌ No se pudo conectar con el bot.');if(status) status.textContent='';}
+    return;
+  }
+  const channelId=document.getElementById('sp-welcome-channel').value;
+  const titulo=document.getElementById('sp-welcome-title').value.trim()||null;
+  const mensaje=document.getElementById('sp-welcome-msg').value.trim()||null;
+  const imagen=document.getElementById('sp-welcome-img').value.trim()||null;
+  const color=document.getElementById('sp-welcome-color').value||'#ffb6c1';
+  if(!channelId) return showToast('⚠️ Selecciona un canal para la bienvenida.');
+  if(status) status.textContent='⏳ Guardando...';
+  try{
+    const res=await fetch(`${BOT_API_URL}/api/guild/${currentGuildData.id}/welcome`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`,'ngrok-skip-browser-warning':'1'},
+      body:JSON.stringify({accion:'activar',channelId,titulo,mensaje,imagen,color})
+    });
+    const data=await res.json();
+    if(res.ok){showToast('✅ Bienvenida configurada');if(status) status.textContent='✅ Bienvenida activa';}
+    else{showToast(`❌ ${data.error||'Error al guardar'}`);if(status) status.textContent='';}
+  }catch(e){showToast('❌ No se pudo conectar con el bot.');if(status) status.textContent='';}
+}
+
+// ── Guardar despedida ──────────────────────────────────────────
+async function saveGoodbye(accion){
+  const token=localStorage.getItem('discord_token');
+  if(!token) return showToast('⚠️ Debes iniciar sesión primero.');
+  const status=document.getElementById('sp-goodbye-status');
+  if(accion==='desactivar'){
+    if(status) status.textContent='⏳ Desactivando...';
+    try{
+      const res=await fetch(`${BOT_API_URL}/api/guild/${currentGuildData.id}/goodbye`,{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`,'ngrok-skip-browser-warning':'1'},
+        body:JSON.stringify({accion:'desactivar'})
+      });
+      const data=await res.json();
+      if(res.ok){showToast('✅ Despedida desactivada');if(status) status.textContent='❌ Despedida desactivada';}
+      else{showToast(`❌ ${data.error||'Error'}`);if(status) status.textContent='';}
+    }catch(e){showToast('❌ No se pudo conectar con el bot.');if(status) status.textContent='';}
+    return;
+  }
+  const channelId=document.getElementById('sp-goodbye-channel').value;
+  const titulo=document.getElementById('sp-goodbye-title').value.trim()||null;
+  const mensaje=document.getElementById('sp-goodbye-msg').value.trim()||null;
+  const imagen=document.getElementById('sp-goodbye-img').value.trim()||null;
+  const color=document.getElementById('sp-goodbye-color').value||'#9b8ea8';
+  if(!channelId) return showToast('⚠️ Selecciona un canal para la despedida.');
+  if(status) status.textContent='⏳ Guardando...';
+  try{
+    const res=await fetch(`${BOT_API_URL}/api/guild/${currentGuildData.id}/goodbye`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`,'ngrok-skip-browser-warning':'1'},
+      body:JSON.stringify({accion:'activar',channelId,titulo,mensaje,imagen,color})
+    });
+    const data=await res.json();
+    if(res.ok){showToast('✅ Despedida configurada');if(status) status.textContent='✅ Despedida activa';}
+    else{showToast(`❌ ${data.error||'Error al guardar'}`);if(status) status.textContent='';}
+  }catch(e){showToast('❌ No se pudo conectar con el bot.');if(status) status.textContent='';}
 }
 
 // Close panel on Escape key
