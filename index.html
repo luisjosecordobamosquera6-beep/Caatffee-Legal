@@ -1058,128 +1058,89 @@ footer{position:relative;z-index:2;border-top:1px solid var(--glass-border);padd
 
 <!-- SECCIÓN 1: SUGERENCIAS -->
 <section id="comments">
-  <span class="eyebrow">Hazlo tuyo</span>
-  <h2 class="sec-t">💡 Sugerencias</h2>
-  <div class="form-sec">
-    <div id="sf">
-      <div class="fg">
-        <label>Categoría</label>
-        <select id="sc" name="categoria">
-          <option value="">— Selecciona —</option>
-          <option>Nuevo comando</option>
-          <option>Mejora de función</option>
-          <option>Otro</option>
-        </select>
-      </div>
-      <div class="fg">
-        <label>Tu sugerencia</label>
-        <textarea id="st2" name="sugerencia" rows="5" placeholder="Cuéntanos tu idea..."></textarea>
-      </div>
-      <div class="fg">
-        <label>¿Por qué sería útil?</label>
-        <textarea id="sw" name="utilidad" rows="3" placeholder="¿Qué problema resuelve?"></textarea>
-      </div>
-      <button class="btn-sub" onclick="enviarSugerencia()">Enviar Sugerencia 💡</button>
+  <div id="sf">
+    <div class="fg">
+      <label>Categoría</label>
+      <select id="sc"><option>Nuevo comando</option><option>Mejora</option><option>Otro</option></select>
     </div>
-    <div class="f-ok" id="sok" style="display:none;">
-      <div class="chk">💡</div>
-      <h3>¡Sugerencia enviada!</h3>
-      <p>Gracias por tu idea para Caatffee. ☕</p>
-    </div>
+    <div class="fg"><label>Sugerencia</label><textarea id="st2" rows="5"></textarea></div>
+    <div class="fg"><label>Utilidad</label><textarea id="sw" rows="3"></textarea></div>
+    <button class="btn-sub" onclick="enviarSugerencia()">Enviar Sugerencia 💡</button>
   </div>
+  <div id="sok" style="display:none;"><h3>¡Sugerencia enviada! ☕</h3></div>
 </section>
 
 <script>
 function enviarSugerencia() {
-  const btn = document.querySelector("#sf .btn-sub");
-  const data = new FormData();
-  data.append("categoria", document.getElementById('sc').value);
-  data.append("sugerencia", document.getElementById('st2').value);
-  data.append("utilidad", document.getElementById('sw').value);
-  data.append("_subject", "NUEVA SUGERENCIA - Caatffee");
+  const btn = document.querySelector("#sf button");
+  const data = {
+    _subject: "NUEVA SUGERENCIA - Caatffee",
+    categoria: document.getElementById('sc').value,
+    sugerencia: document.getElementById('st2').value,
+    utilidad: document.getElementById('sw').value
+  };
 
-  if(!document.getElementById('st2').value) return alert("Escribe tu sugerencia");
+  if(!data.sugerencia) return alert("Escribe tu sugerencia");
   btn.innerText = "Enviando...";
 
-  fetch("https://formspree.io", {
+  fetch("https://formspree.io/f/mojnyewl", {
     method: "POST",
-    body: data,
-    headers: { 'Accept': 'application/json' }
+    body: JSON.stringify(data),
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }
   }).then(res => {
     if (res.ok) {
       document.getElementById('sf').style.display = 'none';
       document.getElementById('sok').style.display = 'block';
     } else {
-      alert("Error. Revisa que el CAPTCHA esté desactivado en Formspree.");
+      alert("Error: Revisa si el CAPTCHA está encendido en Formspree.");
       btn.innerText = "Enviar Sugerencia 💡";
     }
-  }).catch(() => alert("Error de conexión"));
+  }).catch(() => alert("Error de conexión. Prueba desactivando el AdBlock."));
 }
 </script>
 
 <!-- SECCIÓN 2: REPORTES -->
 <section id="report">
-  <span class="eyebrow">¿Algo no funciona?</span>
-  <h2 class="sec-t">🐛 Reportar Error</h2>
-  <div class="form-sec">
-    <div id="rf">
-      <div class="fg">
-        <label>Tipo de error</label>
-        <select id="et" name="tipo_error">
-          <option value="">— Selecciona —</option>
-          <option>Comando no funciona</option>
-          <option>Bot no responde</option>
-          <option>Error visual</option>
-        </select>
-      </div>
-      <div class="fg">
-        <label>Comando (si aplica)</label>
-        <input type="text" id="ec" name="comando" placeholder="/ban, /panel...">
-      </div>
-      <div class="fg">
-        <label>Descripción</label>
-        <textarea id="ed" name="descripcion" rows="5" placeholder="¿Qué pasó?"></textarea>
-      </div>
-      <div class="fg">
-        <label>ID Servidor</label>
-        <input type="text" id="es" name="server_id" placeholder="ID del servidor">
-      </div>
-      <button class="btn-sub" onclick="enviarReporte()">Enviar Reporte 🐛</button>
+  <div id="rf">
+    <div class="fg">
+      <label>Tipo de error</label>
+      <select id="et"><option>Bot no responde</option><option>Error comando</option><option>Otro</option></select>
     </div>
-    <div class="f-ok" id="rok" style="display:none;">
-      <div class="chk">✅</div>
-      <h3>¡Reporte recibido!</h3>
-      <p>Lo revisaremos pronto. ¡Gracias!</p>
-    </div>
+    <div class="fg"><label>Comando</label><input type="text" id="ec"></div>
+    <div class="fg"><label>Descripción</label><textarea id="ed" rows="5"></textarea></div>
+    <div class="fg"><label>ID Servidor</label><input type="text" id="es"></div>
+    <button class="btn-sub" onclick="enviarReporte()">Enviar Reporte 🐛</button>
   </div>
+  <div id="rok" style="display:none;"><h3>¡Reporte recibido! ✅</h3></div>
 </section>
 
 <script>
 function enviarReporte() {
-  const btn = document.querySelector("#rf .btn-sub");
-  const data = new FormData();
-  data.append("tipo", document.getElementById('et').value);
-  data.append("comando", document.getElementById('ec').value);
-  data.append("error", document.getElementById('ed').value);
-  data.append("server", document.getElementById('es').value);
-  data.append("_subject", "REPORTE DE ERROR - Caatffee");
+  const btn = document.querySelector("#rf button");
+  const data = {
+    _subject: "REPORTE DE ERROR - Caatffee",
+    tipo: document.getElementById('et').value,
+    comando: document.getElementById('ec').value,
+    descripcion: document.getElementById('ed').value,
+    server: document.getElementById('es').value
+  };
 
-  if(!document.getElementById('ed').value) return alert("Describe el error");
+  if(!data.descripcion) return alert("Describe el error");
   btn.innerText = "Enviando...";
 
-  fetch("https://formspree.io", {
+  fetch("https://formspree.io/f/mojnyewl", {
     method: "POST",
-    body: data,
-    headers: { 'Accept': 'application/json' }
+    body: JSON.stringify(data),
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }
   }).then(res => {
     if (res.ok) {
       document.getElementById('rf').style.display = 'none';
       document.getElementById('rok').style.display = 'block';
     } else {
-      alert("Error. Revisa que el CAPTCHA esté desactivado en Formspree.");
+      alert("Error al enviar el reporte.");
       btn.innerText = "Enviar Reporte 🐛";
     }
-  }).catch(() => alert("Error de conexión"));
+  }).catch(() => alert("Error de conexión. Intenta desde una pestaña de incógnito."));
 }
 </script>
    
