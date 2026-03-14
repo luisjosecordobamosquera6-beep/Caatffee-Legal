@@ -1068,7 +1068,6 @@ footer{position:relative;z-index:2;border-top:1px solid var(--glass-border);padd
           <option value="">— Selecciona —</option>
           <option>Nuevo comando</option>
           <option>Mejora de función</option>
-          <option>Panel de administración</option>
           <option>Otro</option>
         </select>
       </div>
@@ -1080,7 +1079,7 @@ footer{position:relative;z-index:2;border-top:1px solid var(--glass-border);padd
         <label>¿Por qué sería útil?</label>
         <textarea id="sw" name="utilidad" rows="3" placeholder="¿Qué problema resuelve?"></textarea>
       </div>
-      <button class="btn-sub" onclick="enviarFormulario('sugerencia')">Enviar Sugerencia 💡</button>
+      <button class="btn-sub" onclick="enviarSugerencia()">Enviar Sugerencia 💡</button>
     </div>
     <div class="f-ok" id="sok" style="display:none;">
       <div class="chk">💡</div>
@@ -1089,6 +1088,34 @@ footer{position:relative;z-index:2;border-top:1px solid var(--glass-border);padd
     </div>
   </div>
 </section>
+
+<script>
+function enviarSugerencia() {
+  const btn = document.querySelector("#sf .btn-sub");
+  const data = new FormData();
+  data.append("categoria", document.getElementById('sc').value);
+  data.append("sugerencia", document.getElementById('st2').value);
+  data.append("utilidad", document.getElementById('sw').value);
+  data.append("_subject", "NUEVA SUGERENCIA - Caatffee");
+
+  if(!document.getElementById('st2').value) return alert("Escribe tu sugerencia");
+  btn.innerText = "Enviando...";
+
+  fetch("https://formspree.io", {
+    method: "POST",
+    body: data,
+    headers: { 'Accept': 'application/json' }
+  }).then(res => {
+    if (res.ok) {
+      document.getElementById('sf').style.display = 'none';
+      document.getElementById('sok').style.display = 'block';
+    } else {
+      alert("Error. Revisa que el CAPTCHA esté desactivado en Formspree.");
+      btn.innerText = "Enviar Sugerencia 💡";
+    }
+  }).catch(() => alert("Error de conexión"));
+}
+</script>
 
 <!-- SECCIÓN 2: REPORTES -->
 <section id="report">
@@ -1117,7 +1144,7 @@ footer{position:relative;z-index:2;border-top:1px solid var(--glass-border);padd
         <label>ID Servidor</label>
         <input type="text" id="es" name="server_id" placeholder="ID del servidor">
       </div>
-      <button class="btn-sub" onclick="enviarFormulario('reporte')">Enviar Reporte 🐛</button>
+      <button class="btn-sub" onclick="enviarReporte()">Enviar Reporte 🐛</button>
     </div>
     <div class="f-ok" id="rok" style="display:none;">
       <div class="chk">✅</div>
@@ -1128,48 +1155,31 @@ footer{position:relative;z-index:2;border-top:1px solid var(--glass-border);padd
 </section>
 
 <script>
-async function enviarFormulario(tipo) {
-  let data = {};
-  let formId, successId;
+function enviarReporte() {
+  const btn = document.querySelector("#rf .btn-sub");
+  const data = new FormData();
+  data.append("tipo", document.getElementById('et').value);
+  data.append("comando", document.getElementById('ec').value);
+  data.append("error", document.getElementById('ed').value);
+  data.append("server", document.getElementById('es').value);
+  data.append("_subject", "REPORTE DE ERROR - Caatffee");
 
-  if (tipo === 'sugerencia') {
-    formId = 'sf'; successId = 'sok';
-    data = {
-      _subject: "NUEVA SUGERENCIA - Caatffee",
-      categoria: document.getElementById('sc').value,
-      mensaje: document.getElementById('st2').value,
-      porque: document.getElementById('sw').value
-    };
-    if (!data.categoria || !data.mensaje) return alert("Rellena los campos obligatorios.");
-  } else {
-    formId = 'rf'; successId = 'rok';
-    data = {
-      _subject: "REPORTE DE ERROR - Caatffee",
-      tipo: document.getElementById('et').value,
-      comando: document.getElementById('ec').value,
-      error: document.getElementById('ed').value,
-      server: document.getElementById('es').value
-    };
-    if (!data.tipo || !data.error) return alert("Rellena los campos obligatorios.");
-  }
+  if(!document.getElementById('ed').value) return alert("Describe el error");
+  btn.innerText = "Enviando...";
 
-  // Enviar a Formspree
-  try {
-    const response = await fetch("https://formspree.io", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
-    });
-
-    if (response.ok) {
-      document.getElementById(formId).style.display = 'none';
-      document.getElementById(successId).style.display = 'block';
+  fetch("https://formspree.io", {
+    method: "POST",
+    body: data,
+    headers: { 'Accept': 'application/json' }
+  }).then(res => {
+    if (res.ok) {
+      document.getElementById('rf').style.display = 'none';
+      document.getElementById('rok').style.display = 'block';
     } else {
-      alert("Error al enviar. Verifica si desactivaste el CAPTCHA en Formspree.");
+      alert("Error. Revisa que el CAPTCHA esté desactivado en Formspree.");
+      btn.innerText = "Enviar Reporte 🐛";
     }
-  } catch (error) {
-    alert("Error de conexión con el servidor.");
-  }
+  }).catch(() => alert("Error de conexión"));
 }
 </script>
    
